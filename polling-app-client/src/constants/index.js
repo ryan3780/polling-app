@@ -1,4 +1,7 @@
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+const HOST = 'http://ec2-13-125-139-138.ap-northeast-2.compute.amazonaws.com';
+// export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://ec2-13-125-139-138.ap-northeast-2.compute.amazonaws.com:8080/api';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || `${HOST}:8080/api`;
+
 export const ACCESS_TOKEN = 'accessToken';
 
 export const POLL_LIST_SIZE = 30;

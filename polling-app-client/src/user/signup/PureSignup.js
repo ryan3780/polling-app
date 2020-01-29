@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   signup,
   checkUsernameAvailability,
@@ -18,45 +18,54 @@ import {
 
 import { Form, Input, Button, notification } from "antd";
 const FormItem = Form.Item;
-function Signup({ history }) {
-  const initialState = {
-    name: {
-      value: ""
-    },
-    username: {
-      value: ""
-    },
-    email: {
-      value: ""
-    },
-    password: {
-      value: ""
-    }
-  };
-  const [inputs, setInputs] = React.useState(initialState);
 
-  const handleInputChange = (event, validationFun) => {
+class PureSignup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: {
+        value: ""
+      },
+      username: {
+        value: ""
+      },
+      email: {
+        value: ""
+      },
+      password: {
+        value: ""
+      }
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateUsernameAvailability = this.validateUsernameAvailability.bind(
+      this
+    );
+    this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
+    this.isFormInvalid = this.isFormInvalid.bind(this);
+  }
+
+  handleInputChange(event, validationFun) {
     const target = event.target;
     const inputName = target.name;
     const inputValue = target.value;
 
-    setInputs({
-      ...inputs,
+    this.setState({
       [inputName]: {
         value: inputValue,
         ...validationFun(inputValue)
       }
     });
-  };
+  }
 
-  const handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
 
     const signupRequest = {
-      name: inputs.name.value,
-      email: inputs.email.value,
-      username: inputs.username.value,
-      password: inputs.password.value
+      name: this.state.name.value,
+      email: this.state.email.value,
+      username: this.state.username.value,
+      password: this.state.password.value
     };
     signup(signupRequest)
       .then(response => {
@@ -65,7 +74,7 @@ function Signup({ history }) {
           description:
             "Thank you! You're successfully registered. Please Login to continue!"
         });
-        history.push("/login");
+        this.props.history.push("/login");
       })
       .catch(error => {
         notification.error({
@@ -74,21 +83,114 @@ function Signup({ history }) {
             error.message || "Sorry! Something went wrong. Please try again!"
         });
       });
-  };
+  }
 
-  const isFormInvalid = () => {
+  isFormInvalid() {
     return !(
-      inputs.name.validateStatus === "success" &&
-      inputs.username.validateStatus === "success" &&
-      inputs.email.validateStatus === "success" &&
-      inputs.password.validateStatus === "success"
+      this.state.name.validateStatus === "success" &&
+      this.state.username.validateStatus === "success" &&
+      this.state.email.validateStatus === "success" &&
+      this.state.password.validateStatus === "success"
     );
-  };
-  //   const isFormEnabled = isFormInvalid();
-  //   console.log(isFormEnabled);
+  }
+
+  render() {
+    return (
+      <div className="signup-container">
+        <h1 className="page-title">Sign Up</h1>
+        <div className="signup-content">
+          <Form onSubmit={this.handleSubmit} className="signup-form">
+            <FormItem
+              label="Full Name"
+              validateStatus={this.state.name.validateStatus}
+              help={this.state.name.errorMsg}
+            >
+              <Input
+                size="large"
+                name="name"
+                autoComplete="off"
+                placeholder="Your full name"
+                value={this.state.name.value}
+                onChange={event =>
+                  this.handleInputChange(event, this.validateName)
+                }
+              />
+            </FormItem>
+            <FormItem
+              label="Username"
+              hasFeedback
+              validateStatus={this.state.username.validateStatus}
+              help={this.state.username.errorMsg}
+            >
+              <Input
+                size="large"
+                name="username"
+                autoComplete="off"
+                placeholder="A unique username"
+                value={this.state.username.value}
+                onBlur={this.validateUsernameAvailability}
+                onChange={event =>
+                  this.handleInputChange(event, this.validateUsername)
+                }
+              />
+            </FormItem>
+            <FormItem
+              label="Email"
+              hasFeedback
+              validateStatus={this.state.email.validateStatus}
+              help={this.state.email.errorMsg}
+            >
+              <Input
+                size="large"
+                name="email"
+                type="email"
+                autoComplete="off"
+                placeholder="Your email"
+                value={this.state.email.value}
+                onBlur={this.validateEmailAvailability}
+                onChange={event =>
+                  this.handleInputChange(event, this.validateEmail)
+                }
+              />
+            </FormItem>
+            <FormItem
+              label="Password"
+              validateStatus={this.state.password.validateStatus}
+              help={this.state.password.errorMsg}
+            >
+              <Input
+                size="large"
+                name="password"
+                type="password"
+                autoComplete="off"
+                placeholder="A password between 6 to 20 characters"
+                value={this.state.password.value}
+                onChange={event =>
+                  this.handleInputChange(event, this.validatePassword)
+                }
+              />
+            </FormItem>
+            <FormItem>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                className="signup-form-button"
+                disabled={this.isFormInvalid()}
+              >
+                Sign up
+              </Button>
+              Already registed? <Link to="/login">Login now!</Link>
+            </FormItem>
+          </Form>
+        </div>
+      </div>
+    );
+  }
+
   // Validation Functions
 
-  const validateName = name => {
+  validateName = name => {
     if (name.length < NAME_MIN_LENGTH) {
       return {
         validateStatus: "error",
@@ -107,7 +209,7 @@ function Signup({ history }) {
     }
   };
 
-  const validateEmail = email => {
+  validateEmail = email => {
     if (!email) {
       return {
         validateStatus: "error",
@@ -136,7 +238,7 @@ function Signup({ history }) {
     };
   };
 
-  const validateUsername = username => {
+  validateUsername = username => {
     if (username.length < USERNAME_MIN_LENGTH) {
       return {
         validateStatus: "error",
@@ -155,14 +257,13 @@ function Signup({ history }) {
     }
   };
 
-  const validateUsernameAvailability = () => {
+  validateUsernameAvailability() {
     // First check for client side errors in username
-    const usernameValue = inputs.username.value;
-    const usernameValidation = validateUsername(usernameValue);
+    const usernameValue = this.state.username.value;
+    const usernameValidation = this.validateUsername(usernameValue);
 
     if (usernameValidation.validateStatus === "error") {
-      setInputs({
-        ...inputs,
+      this.setState({
         username: {
           value: usernameValue,
           ...usernameValidation
@@ -171,8 +272,7 @@ function Signup({ history }) {
       return;
     }
 
-    setInputs({
-      ...inputs,
+    this.setState({
       username: {
         value: usernameValue,
         validateStatus: "validating",
@@ -183,8 +283,7 @@ function Signup({ history }) {
     checkUsernameAvailability(usernameValue)
       .then(response => {
         if (response.available) {
-          setInputs({
-            ...inputs,
+          this.setState({
             username: {
               value: usernameValue,
               validateStatus: "success",
@@ -192,8 +291,7 @@ function Signup({ history }) {
             }
           });
         } else {
-          setInputs({
-            ...inputs,
+          this.setState({
             username: {
               value: usernameValue,
               validateStatus: "error",
@@ -204,8 +302,7 @@ function Signup({ history }) {
       })
       .catch(error => {
         // Marking validateStatus as success, Form will be recchecked at server
-        setInputs({
-          ...inputs,
+        this.setState({
           username: {
             value: usernameValue,
             validateStatus: "success",
@@ -213,27 +310,24 @@ function Signup({ history }) {
           }
         });
       });
-  };
+  }
 
-  const validateEmailAvailability = () => {
+  validateEmailAvailability() {
     // First check for client side errors in email
-    const emailValue = inputs.email.value;
-    const emailValidation = validateEmail(emailValue);
+    const emailValue = this.state.email.value;
+    const emailValidation = this.validateEmail(emailValue);
 
     if (emailValidation.validateStatus === "error") {
-      setInputs({
-        ...inputs,
+      this.setState({
         email: {
           value: emailValue,
           ...emailValidation
         }
       });
-
       return;
     }
 
-    setInputs({
-      ...inputs,
+    this.setState({
       email: {
         value: emailValue,
         validateStatus: "validating",
@@ -244,8 +338,7 @@ function Signup({ history }) {
     checkEmailAvailability(emailValue)
       .then(response => {
         if (response.available) {
-          setInputs({
-            ...inputs,
+          this.setState({
             email: {
               value: emailValue,
               validateStatus: "success",
@@ -253,8 +346,7 @@ function Signup({ history }) {
             }
           });
         } else {
-          setInputs({
-            ...inputs,
+          this.setState({
             email: {
               value: emailValue,
               validateStatus: "error",
@@ -265,8 +357,7 @@ function Signup({ history }) {
       })
       .catch(error => {
         // Marking validateStatus as success, Form will be recchecked at server
-        setInputs({
-          ...inputs,
+        this.setState({
           email: {
             value: emailValue,
             validateStatus: "success",
@@ -274,9 +365,9 @@ function Signup({ history }) {
           }
         });
       });
-  };
+  }
 
-  const validatePassword = password => {
+  validatePassword = password => {
     if (password.length < PASSWORD_MIN_LENGTH) {
       return {
         validateStatus: "error",
@@ -294,90 +385,6 @@ function Signup({ history }) {
       };
     }
   };
-  return (
-    <div className="signup-container">
-      <h1 className="page-title">Sign Up</h1>
-      <div className="signup-content">
-        <Form onSubmit={handleSubmit} className="signup-form">
-          <FormItem
-            label="Full Name"
-            validateStatus={inputs.name.validateStatus}
-            help={inputs.name.errorMsg}
-          >
-            <Input
-              size="large"
-              name="name"
-              autoComplete="off"
-              placeholder="Your full name"
-              value={inputs.name.value}
-              onChange={event => handleInputChange(event, validateName)}
-            />
-          </FormItem>
-          <FormItem
-            label="Username"
-            hasFeedback
-            validateStatus={inputs.username.validateStatus}
-            help={inputs.username.errorMsg}
-          >
-            <Input
-              size="large"
-              name="username"
-              autoComplete="off"
-              placeholder="A unique username"
-              value={inputs.username.value}
-              onBlur={validateUsernameAvailability}
-              onChange={event => handleInputChange(event, validateUsername)}
-            />
-          </FormItem>
-          <FormItem
-            label="Email"
-            hasFeedback
-            validateStatus={inputs.email.validateStatus}
-            help={inputs.email.errorMsg}
-          >
-            <Input
-              size="large"
-              name="email"
-              type="email"
-              autoComplete="off"
-              placeholder="Your email"
-              value={inputs.email.value}
-              onBlur={validateEmailAvailability}
-              onChange={event => handleInputChange(event, validateEmail)}
-            />
-          </FormItem>
-          <FormItem
-            label="Password"
-            validateStatus={inputs.password.validateStatus}
-            help={inputs.password.errorMsg}
-          >
-            <Input
-              size="large"
-              name="password"
-              type="password"
-              autoComplete="off"
-              placeholder="A password between 6 to 20 characters"
-              value={inputs.password.value}
-              onChange={event => handleInputChange(event, validatePassword)}
-            />
-          </FormItem>
-          <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              className="signup-form-button"
-              // ()=> isFormInvalid() 로 하면 에러 로그가 찍힌다
-              disabled={isFormInvalid()}
-            >
-              Sign up
-            </Button>
-            Already registed? <Link to="/login">Login now!</Link>
-          </FormItem>
-        </Form>
-      </div>
-    </div>
-  );
 }
 
-export default Signup;
+export default PureSignup;
