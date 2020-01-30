@@ -1,4 +1,4 @@
-###Original Code & developer site : https://github.com/callicoder/spring-security-react-ant-design-polls-app
+### Original Code & developer site : https://github.com/callicoder/spring-security-react-ant-design-polls-app
 
 ## Building a Full Stack Polls app similar to twitter polls with Spring Boot, Spring Security, JWT, React and Ant Design
 
