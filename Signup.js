@@ -86,10 +86,7 @@ function Signup({ history }) {
       inputs.password.validateStatus === "success"
     );
   };
-  //   const isFormEnabled = isFormInvalid();
-  //   console.log(isFormEnabled);
-  // Validation Functions
-
+  
   const validateName = name => {
     if (name.length < NAME_MIN_LENGTH) {
       return {
@@ -298,10 +295,19 @@ function Signup({ history }) {
   };
 
   const checkRadio =()=>{
-    setInputs({
-      ...inputs,
-      isAdmin : !inputs.isAdmin
-    })
+    const test = prompt("root?")
+    if(test === "rootroot"){
+      setInputs({
+        ...inputs,
+        isAdmin : !inputs.isAdmin
+      })
+    }else{
+      setInputs({
+        ...inputs,
+        isAdmin : false
+      })
+    }
+    
   }
   // console.log(inputs)
   return (
@@ -373,7 +379,7 @@ function Signup({ history }) {
             
           </FormItem>
           <FormItem>
-            <Checkbox onChange={checkRadio}>
+            <Checkbox onChange={checkRadio} checked={inputs.isAdmin ? true : false}>
             Admin만 체크 해주세요.
             </Checkbox>     
           </FormItem>
