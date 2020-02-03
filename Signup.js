@@ -295,8 +295,14 @@ function Signup({ history }) {
   };
 
   const checkRadio =()=>{
-    const test = prompt("root?")
-    if(test === "rootroot"){
+    if(inputs.isAdmin){
+      return setInputs({
+        ...inputs,
+        isAdmin : false
+      })
+    }
+    const checkIsAdminPassword = prompt("root?")
+    if(checkIsAdminPassword === "rootroot"){
       setInputs({
         ...inputs,
         isAdmin : !inputs.isAdmin
