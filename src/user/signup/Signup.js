@@ -16,7 +16,7 @@ import {
   PASSWORD_MAX_LENGTH
 } from "../../constants";
 
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button, notification, Checkbox } from "antd";
 const FormItem = Form.Item;
 function Signup({ history }) {
   const initialState = {
@@ -31,9 +31,11 @@ function Signup({ history }) {
     },
     password: {
       value: ""
-    }
+    },
+    isAdmin : false
   };
   const [inputs, setInputs] = React.useState(initialState);
+  
 
   const handleInputChange = (event, validationFun) => {
     const target = event.target;
@@ -84,10 +86,7 @@ function Signup({ history }) {
       inputs.password.validateStatus === "success"
     );
   };
-  //   const isFormEnabled = isFormInvalid();
-  //   console.log(isFormEnabled);
-  // Validation Functions
-
+  
   const validateName = name => {
     if (name.length < NAME_MIN_LENGTH) {
       return {
@@ -294,6 +293,29 @@ function Signup({ history }) {
       };
     }
   };
+
+  const checkRadio =()=>{
+    if(inputs.isAdmin){
+      return setInputs({
+        ...inputs,
+        isAdmin : false
+      })
+    }
+    const checkIsAdminPassword = prompt("root?")
+    if(checkIsAdminPassword === "rootroot"){
+      setInputs({
+        ...inputs,
+        isAdmin : !inputs.isAdmin
+      })
+    }else{
+      setInputs({
+        ...inputs,
+        isAdmin : false
+      })
+    }
+    
+  }
+  // console.log(inputs)
   return (
     <div className="signup-container">
       <h1 className="page-title">Sign Up</h1>
@@ -360,6 +382,12 @@ function Signup({ history }) {
               value={inputs.password.value}
               onChange={event => handleInputChange(event, validatePassword)}
             />
+            
+          </FormItem>
+          <FormItem>
+            <Checkbox onChange={checkRadio} checked={inputs.isAdmin ? true : false}>
+            Admin만 체크 해주세요.
+            </Checkbox>     
           </FormItem>
           <FormItem>
             <Button

@@ -5,6 +5,8 @@ import { Route, withRouter, Switch } from "react-router-dom";
 import { getCurrentUser } from "../util/APIUtils";
 import { ACCESS_TOKEN } from "../constants";
 
+import Info from "../info/Info";
+
 import PollList from "../poll/PollList";
 import NewPoll from "../poll/NewPoll";
 import Login from "../user/login/Login";
@@ -110,6 +112,7 @@ function App({ history }) {
                 />
               )}
             ></Route>
+            <Route path="/info" component={Info}></Route>
             <Route
               path="/login"
               render={props => <Login onLogin={handleLogin} {...props} />}

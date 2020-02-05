@@ -17,8 +17,10 @@ const Profile = ({ match }) => {
     isLoading: false
   };
   const [userProfile, setUserProfile] = React.useState(initialUserProfile);
+  // console.log(userProfile)
 
   const loadUserProfile = username => {
+    console.log(username);
     setUserProfile({
       isLoading: true
     });
@@ -45,11 +47,9 @@ const Profile = ({ match }) => {
       });
   };
 
-  // didmount, didupdate 오류 메모리 leak 발생 로그 발생하는 것 같음...
   useEffect(() => {
     const username = match.params.username;
     loadUserProfile(username);
-    
   }, [match]);
 
   if (userProfile.isLoading) {
@@ -89,6 +89,7 @@ const Profile = ({ match }) => {
               <div className="user-joined">
                 Joined {formatDate(userProfile.user.joinedAt)}
               </div>
+              <div className="username"> </div>
             </div>
           </div>
           <div className="user-poll-details">
