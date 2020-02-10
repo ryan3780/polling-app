@@ -12,19 +12,19 @@ import ServerError from "../../common/ServerError";
 const TabPane = Tabs.TabPane;
 
 const Profile = ({ match }) => {
+ 
   const initialUserProfile = {
     user: null,
     isLoading: false
   };
   const [userProfile, setUserProfile] = React.useState(initialUserProfile);
-  // console.log(userProfile)
+  console.log(userProfile)
 
   const loadUserProfile = username => {
-    console.log(username);
     setUserProfile({
       isLoading: true
     });
-
+  
     getUserProfile(username)
       .then(response => {
         setUserProfile({
@@ -47,9 +47,11 @@ const Profile = ({ match }) => {
       });
   };
 
+  
   useEffect(() => {
     const username = match.params.username;
     loadUserProfile(username);
+    
   }, [match]);
 
   if (userProfile.isLoading) {
@@ -89,7 +91,7 @@ const Profile = ({ match }) => {
               <div className="user-joined">
                 Joined {formatDate(userProfile.user.joinedAt)}
               </div>
-              <div className="username"> </div>
+              <div className="username"> {userProfile.user.id === 11 ? "관리자" : "" }</div>
             </div>
           </div>
           <div className="user-poll-details">
