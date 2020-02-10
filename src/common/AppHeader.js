@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./AppHeader.css";
 import pollIcon from "../poll.svg";
-import { Layout, Menu, Dropdown, Icon } from "antd";
+import { Layout, Menu, Dropdown, Icon, Button } from "antd";
 const Header = Layout.Header;
 
 function AppHeader({ currentUser, location, onLogout }) {
+  const initialScreenSize = { width: undefined };
+
+  const [screenSize, setScreenSize] = React.useState(initialScreenSize);
+
+  function updateScreenSize() {
+    return setScreenSize({ width: window.innerWidth });
+  }
+
+  useEffect(() => {
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, []);
+
   const handleMenuClick = ({ key }) => {
     if (key === "logout") {
       onLogout();
@@ -32,12 +46,13 @@ function AppHeader({ currentUser, location, onLogout }) {
         />
       </Menu.Item>
     ];
-  } else if (matchMedia("screen and (max-width:900px)").matches) {
+  } else if (screenSize.width < 900) {
     const menu = (
       <Menu>
         <Menu.Item key="0">
           <a href="http://www.alipay.com/">1st menu item</a>
         </Menu.Item>
+        <Menu.Divider />
         <Menu.Item key="1">
           <a href="http://www.taobao.com/">2nd menu item</a>
         </Menu.Item>
@@ -46,11 +61,15 @@ function AppHeader({ currentUser, location, onLogout }) {
       </Menu>
     );
     return (
-      <Dropdown overlay={menu} trigger={["click"]}>
-        <a className="ant-dropdown-link" href="/">
-          Click me <Icon type="down" />
-        </a>
-      </Dropdown>
+      <Header className="app-header">
+        <div className="container">
+          <div className="app-title">
+            <Dropdown overlay={menu} placement="bottomLeft">
+              <Button style={{ width: "100%" }}>Button</Button>
+            </Dropdown>
+          </div>
+        </div>
+      </Header>
     );
   } else {
     menuItems = [
