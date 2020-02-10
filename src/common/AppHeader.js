@@ -15,9 +15,6 @@ function AppHeader({ currentUser, location, onLogout }) {
   let menuItems;
   if (currentUser) {
     menuItems = [
-      <Menu.Item key="/profile0" className="profile-menu">
-        <Link to={`/users/${currentUser.username}`}>프로파일</Link>
-      </Menu.Item>,
       <Menu.Item key="/">
         <Link to="/">
           <Icon type="home" className="nav-icon" />
@@ -35,16 +32,39 @@ function AppHeader({ currentUser, location, onLogout }) {
         />
       </Menu.Item>
     ];
+  } else if (matchMedia("screen and (max-width:900px)").matches) {
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">
+          <a href="http://www.alipay.com/">1st menu item</a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a href="http://www.taobao.com/">2nd menu item</a>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="3">3rd menu item</Menu.Item>
+      </Menu>
+    );
+    return (
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <a className="ant-dropdown-link" href="/">
+          Click me <Icon type="down" />
+        </a>
+      </Dropdown>
+    );
   } else {
     menuItems = [
-      <Menu.Item key="/info">
-        <Link to="/info">Info</Link>
-      </Menu.Item>,
-      <Menu.Item key="/login">
-        <Link to="/login">Login</Link>
+      <Menu.Item key="/gosuSignup">
+        <Link to="/gosuSignup">고수가입</Link>
       </Menu.Item>,
       <Menu.Item key="/signup">
-        <Link to="/signup">Signup</Link>
+        <Link to="/signup">회원가입</Link>
+      </Menu.Item>,
+      <Menu.Item key="/findGosu">
+        <Link to="/findGosu">고수 찾기</Link>
+      </Menu.Item>,
+      <Menu.Item key="/login">
+        <Link to="/login">로그인</Link>
       </Menu.Item>
     ];
   }
@@ -53,7 +73,7 @@ function AppHeader({ currentUser, location, onLogout }) {
     <Header className="app-header">
       <div className="container">
         <div className="app-title">
-          <Link to="/">Polling App</Link>
+          <Link to="/">Find App</Link>
         </div>
         <Menu
           className="app-menu"
