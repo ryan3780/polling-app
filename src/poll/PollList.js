@@ -46,6 +46,7 @@ function PollList({ handleLogout, username, type, isAuthenticated, history }) {
     }
 
     setPollListState({
+      ...pollListState,
       isLoading: true
     });
 
@@ -90,6 +91,7 @@ function PollList({ handleLogout, username, type, isAuthenticated, history }) {
     currentVotes[pollIndex] = event.target.value;
 
     setPollListState({
+      ...pollListState,
       currentVotes: currentVotes
     });
   };
@@ -118,6 +120,7 @@ function PollList({ handleLogout, username, type, isAuthenticated, history }) {
         const polls = pollListState.polls.slice();
         polls[pollIndex] = response;
         setPollListState({
+          ...pollListState,
           polls: polls
         });
       })
@@ -139,7 +142,6 @@ function PollList({ handleLogout, username, type, isAuthenticated, history }) {
   };
 
   const pollViews = [];
-  console.log(pollListState.polls);
   pollListState.polls.forEach((poll, pollIndex) => {
     pollViews.push(
       <Poll
