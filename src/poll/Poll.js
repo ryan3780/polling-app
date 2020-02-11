@@ -1,14 +1,15 @@
 import React from 'react';
 import './Poll.css';
-import { Avatar, Icon } from 'antd';
-import { Link } from 'react-router-dom';
-import { getAvatarColor } from '../util/Colors';
-import { formatDateTime } from '../util/Helpers';
+import { Icon } from 'antd';
+// import { Link } from 'react-router-dom';
+// import { getAvatarColor } from '../util/Colors';
+// import { formatDateTime } from '../util/Helpers';
 
-import { Radio, Button } from 'antd';
-const RadioGroup = Radio.Group;
+import { Radio , Input} from 'antd';
+// const RadioGroup = Radio.Group;
+const {Search} = Input
 
-function Poll({poll,handleVoteChange,currentVote,handleVoteSubmit }){
+function Poll({poll }){
     
   const calculatePercentage = (choice) => {
         // console.log(choice)
@@ -30,32 +31,32 @@ function Poll({poll,handleVoteChange,currentVote,handleVoteSubmit }){
         );
     }
 
-   const getTimeRemaining = (poll) => {
-        const expirationTime = new Date(poll.expirationDateTime).getTime();
-        const currentTime = new Date().getTime();
+//    const getTimeRemaining = (poll) => {
+//         const expirationTime = new Date(poll.expirationDateTime).getTime();
+//         const currentTime = new Date().getTime();
     
-        var difference_ms = expirationTime - currentTime;
-        var seconds = Math.floor( (difference_ms/1000) % 60 );
-        var minutes = Math.floor( (difference_ms/1000/60) % 60 );
-        var hours = Math.floor( (difference_ms/(1000*60*60)) % 24 );
-        var days = Math.floor( difference_ms/(1000*60*60*24) );
+//         var difference_ms = expirationTime - currentTime;
+//         var seconds = Math.floor( (difference_ms/1000) % 60 );
+//         var minutes = Math.floor( (difference_ms/1000/60) % 60 );
+//         var hours = Math.floor( (difference_ms/(1000*60*60)) % 24 );
+//         var days = Math.floor( difference_ms/(1000*60*60*24) );
     
-        let timeRemaining;
+//         let timeRemaining;
     
-        if(days > 0) {
-            timeRemaining = days + " days left";
-        } else if (hours > 0) {
-            timeRemaining = hours + " hours left";
-        } else if (minutes > 0) {
-            timeRemaining = minutes + " minutes left";
-        } else if(seconds > 0) {
-            timeRemaining = seconds + " seconds left";
-        } else {
-            timeRemaining = "less than a second left";
-        }
+//         if(days > 0) {
+//             timeRemaining = days + " days left";
+//         } else if (hours > 0) {
+//             timeRemaining = hours + " hours left";
+//         } else if (minutes > 0) {
+//             timeRemaining = minutes + " minutes left";
+//         } else if(seconds > 0) {
+//             timeRemaining = seconds + " seconds left";
+//         } else {
+//             timeRemaining = "less than a second left";
+//         }
         
-        return timeRemaining;
-    }
+//         return timeRemaining;
+//     }
 
     
         const pollChoices = [];
@@ -70,7 +71,9 @@ function Poll({poll,handleVoteChange,currentVote,handleVoteSubmit }){
                     isSelected={isSelected(choice)}
                     percentVote={calculatePercentage(choice)} 
                 />);
-            });                
+                
+            });
+                   
         } else {
             poll.choices.forEach(choice => {
                 pollChoices.push(<Radio className="poll-choice-radio" key={choice.id} value={choice.id}>{choice.text}</Radio>)
@@ -80,7 +83,11 @@ function Poll({poll,handleVoteChange,currentVote,handleVoteSubmit }){
             <div className="poll-content">
                 <div className="poll-header">
                     <div className="poll-creator-info">
-                        <Link className="creator-link" to={`/users/${poll.createdBy.username}`}>
+                        <h2 style={{ fontWeight: 700}}>딱! 맞는 고수를
+                            <br/>
+                            소개해드립니다
+                        </h2>
+                        {/* <Link className="creator-link" to={`/users/${poll.createdBy.username}`}>
                             <Avatar className="poll-creator-avatar" 
                                 style={{ backgroundColor: getAvatarColor(poll.createdBy.name)}} >
                                 {poll.createdBy.name[0].toUpperCase()}
@@ -94,21 +101,25 @@ function Poll({poll,handleVoteChange,currentVote,handleVoteSubmit }){
                             <span className="poll-creation-date">
                                 {formatDateTime(poll.creationDateTime)}
                             </span>
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="poll-question">
-                        {poll.question}
+                    <Search
+                        size='large'
+                        placeholder="어떤 분야의 전문가를 찾으시나요?"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 550, border: '2px solid #00c7ae', borderRadius : '5px' }}/>
                     </div>
                 </div>
-                <div className="poll-choices">
+                {/* <div className="poll-choices">
                     <RadioGroup 
                         className="poll-choice-radio-group" 
                         onChange={handleVoteChange} 
                         value={currentVote}>
                         { pollChoices }
                     </RadioGroup>
-                </div>
-                <div className="poll-footer">
+                </div> */}
+                {/* <div className="poll-footer">
                     { 
                         !(poll.selectedChoice || poll.expired) ?
                         (<Button className="vote-button" disabled={!currentVote} onClick={handleVoteSubmit}>Vote</Button>) : null 
@@ -121,7 +132,7 @@ function Poll({poll,handleVoteChange,currentVote,handleVoteSubmit }){
                             getTimeRemaining(poll)
                         }
                     </span>
-                </div>
+                </div> */}
             </div>
         );
     }

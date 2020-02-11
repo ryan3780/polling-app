@@ -5,8 +5,6 @@ import { Route, withRouter, Switch } from "react-router-dom";
 import { getCurrentUser } from "../util/APIUtils";
 import { ACCESS_TOKEN } from "../constants";
 
-import Info from "../info/Info";
-
 import PollList from "../poll/PollList";
 import NewPoll from "../poll/NewPoll";
 import Login from "../user/login/Login";
@@ -18,9 +16,10 @@ import LoadingIndicator from "../common/LoadingIndicator";
 import PrivateRoute from "../common/PrivateRoute";
 
 import { Layout, notification } from "antd";
-const { Content } = Layout;
+const { Content} = Layout;
 
 function App({ history }) {
+
   const initalCurrentUser = {
     currentUser: null,
     isAuthenticated: false,
@@ -35,6 +34,7 @@ function App({ history }) {
   const [userState, setUserState] = React.useState(initalCurrentUser);
 
   const loadCurrentUser = () => {
+
     setUserState({
       isLoading: true
     });
@@ -112,7 +112,6 @@ function App({ history }) {
                 />
               )}
             ></Route>
-            <Route path="/info" component={Info}></Route>
             <Route
               path="/login"
               render={props => <Login onLogin={handleLogin} {...props} />}
@@ -120,7 +119,7 @@ function App({ history }) {
             <Route path="/signup" component={Signup}></Route>
             <Route
               path="/users/:username"
-              render={props => (
+              render={(props) => (
                 <Profile
                   isAuthenticated={userState.isAuthenticated}
                   currentUser={userState.currentUser}

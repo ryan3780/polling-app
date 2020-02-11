@@ -49,15 +49,21 @@ function AppHeader({ currentUser, location, onLogout }) {
   } else if (screenSize.width < 900) {
     const menu = (
       <Menu>
-        <Menu.Item key="0">
-          <a href="http://www.alipay.com/">1st menu item</a>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="1">
-          <a href="http://www.taobao.com/">2nd menu item</a>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="3">3rd menu item</Menu.Item>
+        <Menu.Item key="/gosuSignup">
+        <Link to="/gosuSignup">고수가입</Link>
+      </Menu.Item>
+       
+        <Menu.Item key="/signup">
+        <Link to="/signup">회원가입</Link>
+      </Menu.Item>
+        
+        <Menu.Item key="/findGosu">
+        <Link to="/findGosu">고수 찾기</Link>
+      </Menu.Item>
+     
+      <Menu.Item key="/login">
+        <Link to="/login">로그인</Link>
+      </Menu.Item>
       </Menu>
     );
     return (
@@ -65,7 +71,7 @@ function AppHeader({ currentUser, location, onLogout }) {
         <div className="container">
           <div className="app-title">
             <Dropdown overlay={menu} placement="bottomLeft">
-              <Button style={{ width: "100%" }}>Button</Button>
+              <Button style={{ width: "100%" }}><Icon type="bars" /></Button>
             </Dropdown>
           </div>
         </div>

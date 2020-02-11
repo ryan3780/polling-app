@@ -8,3 +8,54 @@
     text-align: center;
     margin-bottom: 40px;    
 }
+
+.test {
+    margin-top: 10px;
+    position: relative;
+   
+}
+
+.shadow:hover {
+ cursor: pointer;
+ transform:translate(0,-15px);
+ transition: all 0.5s ;
+ 
+}
+
+.categories {
+    text-align: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding-top: 1.875rem;
+    /* padding-right: 3.125rem; */
+    margin-top: 10px;
+    padding-left: 0%
+    
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    width: 25%;
+    /* padding-left: .46875rem; */
+    padding-right: .46875rem;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+    .categories {
+        display: none
+    }
+    img {
+        display: none;
+    }
+}
+
+img {
+    max-width: 200px;
+}

@@ -18,7 +18,7 @@ const Profile = ({ match }) => {
     isLoading: false
   };
   const [userProfile, setUserProfile] = React.useState(initialUserProfile);
-  console.log(userProfile)
+  // console.log(userProfile)
 
   const loadUserProfile = username => {
     setUserProfile({
@@ -91,7 +91,7 @@ const Profile = ({ match }) => {
               <div className="user-joined">
                 Joined {formatDate(userProfile.user.joinedAt)}
               </div>
-              <div className="username"> {userProfile.user.id === 11 ? "관리자" : "" }</div>
+              <div className="username"> {userProfile.user.id === 11 ? "관리자" : null }</div>
             </div>
           </div>
           <div className="user-poll-details">

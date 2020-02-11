@@ -70,9 +70,11 @@ class PollList extends Component {
 
     componentDidMount() {
         this.loadPollList();
+        console.log(this.loadPollList())
     }
 
     componentDidUpdate(nextProps) {
+        
         if(this.props.isAuthenticated !== nextProps.isAuthenticated) {
             // Reset State
             this.setState({
@@ -86,6 +88,7 @@ class PollList extends Component {
                 isLoading: false
             });    
             this.loadPollList();
+            console.log(this.loadPollList())
         }
     }
 
