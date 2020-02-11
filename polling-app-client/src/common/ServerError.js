@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './ServerError.css';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
-class ServerError extends Component {
-    render() {
+const ServerError=()=>{
+    
         return (
             <div className="server-error-page">
                 <h1 className="server-error-title">
@@ -17,6 +17,6 @@ class ServerError extends Component {
             </div>
         );
     }
-}
+
 
 export default ServerError;

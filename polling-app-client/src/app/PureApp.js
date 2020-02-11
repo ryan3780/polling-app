@@ -16,10 +16,9 @@ import LoadingIndicator from "../common/LoadingIndicator";
 import PrivateRoute from "../common/PrivateRoute";
 
 import { Layout, notification } from "antd";
-const { Content} = Layout;
+const { Content } = Layout;
 
 function App({ history }) {
-
   const initalCurrentUser = {
     currentUser: null,
     isAuthenticated: false,
@@ -34,7 +33,6 @@ function App({ history }) {
   const [userState, setUserState] = React.useState(initalCurrentUser);
 
   const loadCurrentUser = () => {
-
     setUserState({
       isLoading: true
     });
@@ -119,7 +117,7 @@ function App({ history }) {
             <Route path="/signup" component={Signup}></Route>
             <Route
               path="/users/:username"
-              render={(props) => (
+              render={props => (
                 <Profile
                   isAuthenticated={userState.isAuthenticated}
                   currentUser={userState.currentUser}

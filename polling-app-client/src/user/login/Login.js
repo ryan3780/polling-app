@@ -4,6 +4,7 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import { ACCESS_TOKEN } from "../../constants";
 
+
 import { Form, Input, Button, Icon, notification } from "antd";
 const FormItem = Form.Item;
 
@@ -20,9 +21,11 @@ const Login = ({ onLogin }) => {
 };
 
 const LoginForm = ({ form, onLogin }) => {
+  
   const handleSubmit = event => {
     event.preventDefault();
     form.validateFields((err, values) => {
+      // console.log(values)
       if (!err) {
         const loginRequest = Object.assign({}, values);
         login(loginRequest)
@@ -51,6 +54,7 @@ const LoginForm = ({ form, onLogin }) => {
   };
 
   const { getFieldDecorator } = form;
+  
   return (
     <Form onSubmit={handleSubmit} className="login-form">
       <FormItem>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { createPoll } from '../util/APIUtils';
 import { MAX_CHOICES, POLL_QUESTION_MAX_LENGTH, POLL_CHOICE_MAX_LENGTH } from '../constants';
 import './NewPoll.css';  
@@ -7,58 +7,65 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input
 
-function NewPoll({history,handleLogout}) {
+class NewPoll extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            question: {
+                text: ''
+            },
+            choices: [{
+                text: ''
+            }, {
+                text: ''
+            }],
+            pollLength: {
+                days: 1,
+                hours: 0
+            }
+        };
+        this.addChoice = this.addChoice.bind(this);
+        this.removeChoice = this.removeChoice.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleQuestionChange = this.handleQuestionChange.bind(this);
+        this.handleChoiceChange = this.handleChoiceChange.bind(this);
+        this.handlePollDaysChange = this.handlePollDaysChange.bind(this);
+        this.handlePollHoursChange = this.handlePollHoursChange.bind(this);
+        this.isFormInvalid = this.isFormInvalid.bind(this);
+    }
 
-    const initialNewPollState = {
-        question: {
-            text: ''
-        },
-        choices: [{
-            text: ''
-        }, {
-            text: ''
-        }],
-        pollLength: {
-            days: 1,
-            hours: 0
-        }
-    };
-    const [newPollState, setNewPollState] = React.useState(initialNewPollState)
-   
-    const addChoice=(event)=> {
-        const choices = newPollState.choices.slice();        
-        setNewPollState({
-            ...newPollState,
+    addChoice(event) {
+        const choices = this.state.choices.slice();        
+        this.setState({
             choices: choices.concat([{
                 text: ''
             }])
         });
     }
 
-    const removeChoice=(choiceNumber)=> {
-        const choices = newPollState.choices.slice();
-        setNewPollState({
-            ...newPollState,
+    removeChoice(choiceNumber) {
+        const choices = this.state.choices.slice();
+        this.setState({
             choices: [...choices.slice(0, choiceNumber), ...choices.slice(choiceNumber+1)]
         });
     }
 
-    const handleSubmit=(event)=> {
+    handleSubmit(event) {
         event.preventDefault();
         const pollData = {
-            question: newPollState.question.text,
-            choices: newPollState.choices.map(choice => {
+            question: this.state.question.text,
+            choices: this.state.choices.map(choice => {
                 return {text: choice.text} 
             }),
-            pollLength: newPollState.pollLength
+            pollLength: this.state.pollLength
         };
 
         createPoll(pollData)
         .then(response => {
-            history.push("/");
+            this.props.history.push("/");
         }).catch(error => {
             if(error.status === 401) {
-                handleLogout('/login', 'error', 'You have been logged out. Please login create poll.');    
+                this.props.handleLogout('/login', 'error', 'You have been logged out. Please login create poll.');    
             } else {
                 notification.error({
                     message: 'Polling App',
@@ -68,7 +75,7 @@ function NewPoll({history,handleLogout}) {
         });
     }
 
-    const validateQuestion = (questionText) => {
+    validateQuestion = (questionText) => {
         if(questionText.length === 0) {
             return {
                 validateStatus: 'error',
@@ -87,18 +94,17 @@ function NewPoll({history,handleLogout}) {
         }
     }
 
-    const handleQuestionChange=(event)=> {
+    handleQuestionChange(event) {
         const value = event.target.value;
-        setNewPollState({
-            ...newPollState,
+        this.setState({
             question: {
                 text: value,
-                ...validateQuestion(value)
+                ...this.validateQuestion(value)
             }
         });
     }
 
-    const validateChoice = (choiceText) => {
+    validateChoice = (choiceText) => {
         if(choiceText.length === 0) {
             return {
                 validateStatus: 'error',
@@ -117,75 +123,72 @@ function NewPoll({history,handleLogout}) {
         }
     }
 
-    const handleChoiceChange=(event, index)=> {
-        const choices = newPollState.choices.slice();
+    handleChoiceChange(event, index) {
+        const choices = this.state.choices.slice();
         const value = event.target.value;
 
         choices[index] = {
             text: value,
-            ...validateChoice(value)
+            ...this.validateChoice(value)
         }
 
-        setNewPollState({
-            ...newPollState,
+        this.setState({
             choices: choices
         });
     }
 
 
-    const handlePollDaysChange=(value)=> {
-        const pollLength = Object.assign(newPollState.pollLength, {days: value});
-        setNewPollState({
-            ...newPollState,
+    handlePollDaysChange(value) {
+        const pollLength = Object.assign(this.state.pollLength, {days: value});
+        this.setState({
             pollLength: pollLength
         });
     }
 
-    const handlePollHoursChange=(value)=> {
-        const pollLength = Object.assign(newPollState.pollLength, {hours: value});
-        setNewPollState({
-            ...newPollState,
+    handlePollHoursChange(value) {
+        const pollLength = Object.assign(this.state.pollLength, {hours: value});
+        this.setState({
             pollLength: pollLength
         });
     }
 
-    const isFormInvalid=()=> {
-        if(newPollState.question.validateStatus !== 'success') {
+    isFormInvalid() {
+        if(this.state.question.validateStatus !== 'success') {
             return true;
         }
     
-        for(let i = 0; i < newPollState.choices.length; i++) {
-            const choice = newPollState.choices[i];            
+        for(let i = 0; i < this.state.choices.length; i++) {
+            const choice = this.state.choices[i];            
             if(choice.validateStatus !== 'success') {
                 return true;
             }
         }
     }
 
-   
+    render() {
         const choiceViews = [];
-        newPollState.choices.forEach((choice, index) => {
-            choiceViews.push(<PollChoice key={index} choice={choice} choiceNumber={index} removeChoice={removeChoice} handleChoiceChange={handleChoiceChange}/>);
+        this.state.choices.forEach((choice, index) => {
+            choiceViews.push(<PollChoice key={index} choice={choice} choiceNumber={index} removeChoice={this.removeChoice} handleChoiceChange={this.handleChoiceChange}/>);
         });
 
         return (
             <div className="new-poll-container">
                 <h1 className="page-title">Create Poll</h1>
                 <div className="new-poll-content">
-                    <Form onSubmit={handleSubmit} className="create-poll-form">
-                        <FormItem validateStatus={newPollState.question.validateStatus}
-                            help={newPollState.question.errorMsg} className="poll-form-row">
+                    <Form onSubmit={this.handleSubmit} className="create-poll-form">
+                        <FormItem validateStatus={this.state.question.validateStatus}
+                            help={this.state.question.errorMsg} className="poll-form-row">
                         <TextArea 
                             placeholder="Enter your question"
                             style = {{ fontSize: '16px' }} 
                             autosize={{ minRows: 3, maxRows: 6 }} 
                             name = "question"
-                            value = {newPollState.question.text}
-                            onChange = {handleQuestionChange} />
+                            value = {this.state.question.text}
+                            onChange = {this.handleQuestionChange} />
                         </FormItem>
                         {choiceViews}
                         <FormItem className="poll-form-row">
-                            <Button type="dashed" onClick={addChoice} disabled={newPollState.choices.length === MAX_CHOICES}>
+                            <Button type="dashed" onClick={this.addChoice} disabled={this.state.choices.length === MAX_CHOICES}>
                                 <Icon type="plus" /> Add a choice
                             </Button>
                         </FormItem>
@@ -198,8 +201,8 @@ function NewPoll({history,handleLogout}) {
                                     <Select 
                                         name="days"
                                         defaultValue="1" 
-                                        onChange={handlePollDaysChange}
-                                        value={newPollState.pollLength.days}
+                                        onChange={this.handlePollDaysChange}
+                                        value={this.state.pollLength.days}
                                         style={{ width: 60 }} >
                                         {
                                             Array.from(Array(8).keys()).map(i => 
@@ -212,8 +215,8 @@ function NewPoll({history,handleLogout}) {
                                     <Select 
                                         name="hours"
                                         defaultValue="0" 
-                                        onChange={handlePollHoursChange}
-                                        value={newPollState.pollLength.hours}
+                                        onChange={this.handlePollHoursChange}
+                                        value={this.state.pollLength.hours}
                                         style={{ width: 60 }} >
                                         {
                                             Array.from(Array(24).keys()).map(i => 
@@ -228,7 +231,7 @@ function NewPoll({history,handleLogout}) {
                             <Button type="primary" 
                                 htmlType="submit" 
                                 size="large" 
-                                disabled={isFormInvalid()}
+                                disabled={this.isFormInvalid()}
                                 className="create-poll-form-button">Create Poll</Button>
                         </FormItem>
                     </Form>
@@ -236,26 +239,26 @@ function NewPoll({history,handleLogout}) {
             </div>
         );
     }
+}
 
-
-function PollChoice({choice, handleChoiceChange, removeChoice,choiceNumber}) {
+function PollChoice(props) {
     return (
-        <FormItem validateStatus={choice.validateStatus}
-        help={choice.errorMsg} className="poll-form-row">
+        <FormItem validateStatus={props.choice.validateStatus}
+        help={props.choice.errorMsg} className="poll-form-row">
             <Input 
-                placeholder = {'Choice ' + (choiceNumber + 1)}
+                placeholder = {'Choice ' + (props.choiceNumber + 1)}
                 size="large"
-                value={choice.text} 
-                className={ choiceNumber > 1 ? "optional-choice": null}
-                onChange={(event) => handleChoiceChange(event, choiceNumber)} />
+                value={props.choice.text} 
+                className={ props.choiceNumber > 1 ? "optional-choice": null}
+                onChange={(event) => props.handleChoiceChange(event, props.choiceNumber)} />
 
             {
-                choiceNumber > 1 ? (
+                props.choiceNumber > 1 ? (
                 <Icon
                     className="dynamic-delete-button"
                     type="close"
-                    disabled={choiceNumber <= 1}
-                    onClick={() => removeChoice(choiceNumber)}
+                    disabled={props.choiceNumber <= 1}
+                    onClick={() => props.removeChoice(props.choiceNumber)}
                 /> ): null
             }    
         </FormItem>

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './NotFound.css';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
-class NotFound extends Component {
-    render() {
+const NotFound=()=> {
+    
         return (
             <div className="page-not-found">
                 <h1 className="title">
@@ -17,6 +17,6 @@ class NotFound extends Component {
             </div>
         );
     }
-}
+
 
 export default NotFound;

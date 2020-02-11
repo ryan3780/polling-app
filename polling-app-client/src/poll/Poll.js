@@ -1,75 +1,81 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Poll.css';
-import { Avatar, Icon } from 'antd';
-import { Link } from 'react-router-dom';
-import { getAvatarColor } from '../util/Colors';
-import { formatDateTime } from '../util/Helpers';
+import { Icon } from 'antd';
+// import { Link } from 'react-router-dom';
+// import { getAvatarColor } from '../util/Colors';
+// import { formatDateTime } from '../util/Helpers';
 
-import { Radio, Button } from 'antd';
-const RadioGroup = Radio.Group;
+import { Radio , Input} from 'antd';
+// const RadioGroup = Radio.Group;
+const {Search} = Input
 
-class Poll extends Component {
-    calculatePercentage = (choice) => {
-        if(this.props.poll.totalVotes === 0) {
-            return 0;
+function Poll({poll }){
+    
+  const calculatePercentage = (choice) => {
+        // console.log(choice)
+        // choice = {id: 8, text: "yes", voteCount: 1} 이런 식으로 들어온다
+        if(poll.totalVotes === 0) {
+            return 0
         }
-        return (choice.voteCount*100)/(this.props.poll.totalVotes);
+        return (choice.voteCount*100)/(poll.totalVotes);
     };
 
-    isSelected = (choice) => {
-        return this.props.poll.selectedChoice === choice.id;
+  const isSelected = (choice) => {
+        return poll.selectedChoice === choice.id;
     }
 
-    getWinningChoice = () => {
-        return this.props.poll.choices.reduce((prevChoice, currentChoice) => 
+   const getWinningChoice = () => {
+        return poll.choices.reduce((prevChoice, currentChoice) => 
             currentChoice.voteCount > prevChoice.voteCount ? currentChoice : prevChoice, 
             {voteCount: -Infinity}
         );
     }
 
-    getTimeRemaining = (poll) => {
-        const expirationTime = new Date(poll.expirationDateTime).getTime();
-        const currentTime = new Date().getTime();
+//    const getTimeRemaining = (poll) => {
+//         const expirationTime = new Date(poll.expirationDateTime).getTime();
+//         const currentTime = new Date().getTime();
     
-        var difference_ms = expirationTime - currentTime;
-        var seconds = Math.floor( (difference_ms/1000) % 60 );
-        var minutes = Math.floor( (difference_ms/1000/60) % 60 );
-        var hours = Math.floor( (difference_ms/(1000*60*60)) % 24 );
-        var days = Math.floor( difference_ms/(1000*60*60*24) );
+//         var difference_ms = expirationTime - currentTime;
+//         var seconds = Math.floor( (difference_ms/1000) % 60 );
+//         var minutes = Math.floor( (difference_ms/1000/60) % 60 );
+//         var hours = Math.floor( (difference_ms/(1000*60*60)) % 24 );
+//         var days = Math.floor( difference_ms/(1000*60*60*24) );
     
-        let timeRemaining;
+//         let timeRemaining;
     
-        if(days > 0) {
-            timeRemaining = days + " days left";
-        } else if (hours > 0) {
-            timeRemaining = hours + " hours left";
-        } else if (minutes > 0) {
-            timeRemaining = minutes + " minutes left";
-        } else if(seconds > 0) {
-            timeRemaining = seconds + " seconds left";
-        } else {
-            timeRemaining = "less than a second left";
-        }
+//         if(days > 0) {
+//             timeRemaining = days + " days left";
+//         } else if (hours > 0) {
+//             timeRemaining = hours + " hours left";
+//         } else if (minutes > 0) {
+//             timeRemaining = minutes + " minutes left";
+//         } else if(seconds > 0) {
+//             timeRemaining = seconds + " seconds left";
+//         } else {
+//             timeRemaining = "less than a second left";
+//         }
         
-        return timeRemaining;
-    }
+//         return timeRemaining;
+//     }
 
-    render() {
+    
         const pollChoices = [];
-        if(this.props.poll.selectedChoice || this.props.poll.expired) {
-            const winningChoice = this.props.poll.expired ? this.getWinningChoice() : null;
+        if(poll.selectedChoice || poll.expired) {
+            const winningChoice = poll.expired ? getWinningChoice() : null;
 
-            this.props.poll.choices.forEach(choice => {
+            poll.choices.forEach(choice => {
                 pollChoices.push(<CompletedOrVotedPollChoice 
                     key={choice.id} 
                     choice={choice}
                     isWinner={winningChoice && choice.id === winningChoice.id}
-                    isSelected={this.isSelected(choice)}
-                    percentVote={this.calculatePercentage(choice)} 
+                    isSelected={isSelected(choice)}
+                    percentVote={calculatePercentage(choice)} 
                 />);
-            });                
+                
+            });
+                   
         } else {
-            this.props.poll.choices.forEach(choice => {
+            poll.choices.forEach(choice => {
                 pollChoices.push(<Radio className="poll-choice-radio" key={choice.id} value={choice.id}>{choice.text}</Radio>)
             })    
         }        
@@ -77,73 +83,83 @@ class Poll extends Component {
             <div className="poll-content">
                 <div className="poll-header">
                     <div className="poll-creator-info">
-                        <Link className="creator-link" to={`/users/${this.props.poll.createdBy.username}`}>
+                        <h2 style={{ fontWeight: 700}}>딱! 맞는 고수를
+                            <br/>
+                            소개해드립니다
+                        </h2>
+                        {/* <Link className="creator-link" to={`/users/${poll.createdBy.username}`}>
                             <Avatar className="poll-creator-avatar" 
-                                style={{ backgroundColor: getAvatarColor(this.props.poll.createdBy.name)}} >
-                                {this.props.poll.createdBy.name[0].toUpperCase()}
+                                style={{ backgroundColor: getAvatarColor(poll.createdBy.name)}} >
+                                {poll.createdBy.name[0].toUpperCase()}
                             </Avatar>
                             <span className="poll-creator-name">
-                                {this.props.poll.createdBy.name}
+                                {poll.createdBy.name}
                             </span>
                             <span className="poll-creator-username">
-                                @{this.props.poll.createdBy.username}
+                                @{poll.createdBy.username}
                             </span>
                             <span className="poll-creation-date">
-                                {formatDateTime(this.props.poll.creationDateTime)}
+                                {formatDateTime(poll.creationDateTime)}
                             </span>
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="poll-question">
-                        {this.props.poll.question}
+                    <Search
+                        size='large'
+                        placeholder="어떤 분야의 전문가를 찾으시나요?"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 550, border: '2px solid #00c7ae', borderRadius : '5px' }}/>
                     </div>
                 </div>
-                <div className="poll-choices">
+                {/* <div className="poll-choices">
                     <RadioGroup 
                         className="poll-choice-radio-group" 
-                        onChange={this.props.handleVoteChange} 
-                        value={this.props.currentVote}>
+                        onChange={handleVoteChange} 
+                        value={currentVote}>
                         { pollChoices }
                     </RadioGroup>
-                </div>
-                <div className="poll-footer">
+                </div> */}
+                {/* <div className="poll-footer">
                     { 
-                        !(this.props.poll.selectedChoice || this.props.poll.expired) ?
-                        (<Button className="vote-button" disabled={!this.props.currentVote} onClick={this.props.handleVoteSubmit}>Vote</Button>) : null 
+                        !(poll.selectedChoice || poll.expired) ?
+                        (<Button className="vote-button" disabled={!currentVote} onClick={handleVoteSubmit}>Vote</Button>) : null 
                     }
-                    <span className="total-votes">{this.props.poll.totalVotes} votes</span>
+                    <span className="total-votes">{poll.totalVotes} votes</span>
                     <span className="separator">•</span>
                     <span className="time-left">
                         {
-                            this.props.poll.expired ? "Final results" :
-                            this.getTimeRemaining(this.props.poll)
+                            poll.expired ? "Final results" :
+                            getTimeRemaining(poll)
                         }
                     </span>
-                </div>
+                </div> */}
             </div>
         );
     }
-}
 
-function CompletedOrVotedPollChoice(props) {
+
+function CompletedOrVotedPollChoice({percentVote,choice,isSelected,isWinner}) {
+    // console.log(props)
+    // props = 각 투표의 항목들이 개별적으로 choice객체로 구성되어 있다
     return (
         <div className="cv-poll-choice">
             <span className="cv-poll-choice-details">
                 <span className="cv-choice-percentage">
-                    {Math.round(props.percentVote * 100) / 100}%
+                    {Math.round(percentVote * 100) / 100}%
                 </span>            
                 <span className="cv-choice-text">
-                    {props.choice.text}
+                    {choice.text}
                 </span>
                 {
-                    props.isSelected ? (
+                    isSelected ? (
                     <Icon
                         className="selected-choice-icon"
                         type="check-circle-o"
                     /> ): null
                 }    
             </span>
-            <span className={props.isWinner ? 'cv-choice-percent-chart winner': 'cv-choice-percent-chart'} 
-                style={{width: props.percentVote + '%' }}>
+            <span className={isWinner ? 'cv-choice-percent-chart winner': 'cv-choice-percent-chart'} 
+                style={{width: percentVote + '%' }}>
             </span>
         </div>
     );

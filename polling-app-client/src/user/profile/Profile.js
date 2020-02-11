@@ -12,17 +12,19 @@ import ServerError from "../../common/ServerError";
 const TabPane = Tabs.TabPane;
 
 const Profile = ({ match }) => {
+ 
   const initialUserProfile = {
     user: null,
     isLoading: false
   };
   const [userProfile, setUserProfile] = React.useState(initialUserProfile);
+  // console.log(userProfile)
 
   const loadUserProfile = username => {
     setUserProfile({
       isLoading: true
     });
-
+  
     getUserProfile(username)
       .then(response => {
         setUserProfile({
@@ -45,11 +47,11 @@ const Profile = ({ match }) => {
       });
   };
 
-  // didmount, didupdate 오류 메모리 leak 발생 로그 발생하는 것 같음...
+  
   useEffect(() => {
     const username = match.params.username;
     loadUserProfile(username);
-    console.log(match);
+    
   }, [match]);
 
   if (userProfile.isLoading) {
@@ -89,6 +91,7 @@ const Profile = ({ match }) => {
               <div className="user-joined">
                 Joined {formatDate(userProfile.user.joinedAt)}
               </div>
+              <div className="username"> {userProfile.user.id === 11 ? "관리자" : null }</div>
             </div>
           </div>
           <div className="user-poll-details">
