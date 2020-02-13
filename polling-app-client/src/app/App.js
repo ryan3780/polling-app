@@ -103,7 +103,7 @@ function App({ history }) {
             <Route
               exact
               path="/"
-              render={props => (
+              render={props =>( 
                 <PollList
                   isAuthenticated={userState.isAuthenticated}
                   currentUser={userState.currentUser}

@@ -2,16 +2,18 @@ import React from 'react';
 import { getAllPolls, getUserCreatedPolls, getUserVotedPolls } from '../util/APIUtils';
 import Poll from './Poll';
 import { castVote } from '../util/APIUtils';
-// import LoadingIndicator  from '../common/LoadingIndicator';
-import {  Icon, notification, Layout } from 'antd';
+import LoadingIndicator  from '../common/LoadingIndicator';
+import {  Icon, notification, Layout,Button , Input} from 'antd';
 import { POLL_LIST_SIZE } from '../constants';
 import { withRouter } from 'react-router-dom';
 import './PollList.css';
 import { useEffect } from 'react';
 
-const { Sider, Content } = Layout;
 
-function PollList ({username, type,isAuthenticated,history,handleLogout}) {
+const { Sider, Content } = Layout;
+const {Search} = Input
+
+function PollList ({username, type,isAuthenticated,history,handleLogout, match}) {
     const initialPollListState = {
         polls: [],
         page: 0,
@@ -75,9 +77,9 @@ function PollList ({username, type,isAuthenticated,history,handleLogout}) {
         },[isAuthenticated])
   
 
-    // const handleLoadMore=()=> {
-    //     loadPollList(pollListState.page + 1);
-    // }
+    const handleLoadMore=()=> {
+        loadPollList(pollListState.page + 1);
+    }
 
   const  handleVoteChange=(event, pollIndex)=> {
         const currentVotes = pollListState.currentVotes.slice();
@@ -140,10 +142,11 @@ function PollList ({username, type,isAuthenticated,history,handleLogout}) {
                 handleVoteSubmit={(event) => handleVoteSubmit(event, pollIndex)} />)            
         });
         
+        
         return (
             <div className="polls-container">
-                {pollViews[0]}
-                {/* {
+                { match.path !== "/" ? pollViews : <MainPage />}
+                {
                     !pollListState.isLoading && pollListState.polls.length === 0 ? (
                         <div className="no-polls-found">
                             <span>No Polls Found.</span>
@@ -161,50 +164,72 @@ function PollList ({username, type,isAuthenticated,history,handleLogout}) {
                 {
                     pollListState.isLoading ? 
                     <LoadingIndicator />: null                     
-                } */}
+                }
+                </div>
+        );
+    }
+
+    function MainPage() {
+        return ( 
+        <div>
+        <div className="poll-content">
+        <div className="poll-header">
+            <div className="poll-creator-info">
+                <h2 style={{ fontWeight: 700}}>딱! 맞는 고수를
+                    <br/>
+                    소개해드립니다
+                </h2></div><div className="poll-question">
+                    <Search
+                        size='large'
+                        placeholder="어떤 분야의 전문가를 찾으시나요?"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 550, border: '2px solid #00c7ae', borderRadius : '5px' }}/>
+                    </div>
+                </div> 
+            </div>
+        
                 <Layout style={{marginTop:'10px'}}>   
                 <Content>
                 <ul className="categories">
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="edit" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">레슨</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="bank" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">홈/리빙</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="heart" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">이벤트</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="project" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">비즈니스</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="html5" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">디자인/개발</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="smile" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">건강/미용</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="dollar" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">알바</p>
                     </li>
-                    <li>
+                    <li className="categoryIcon">
                 <Icon className='shadow' type="bulb" theme="twoTone" style={{ fontSize: '50px', color: '#08c' }}/>
                 <p className="test">기타</p>
                     </li> 
                 </ul>
                 </Content>
                 <Sider>
-                <img alt="pt_trainer" src="https://d1hhkexwnh74v.cloudfront.net/images/category1/pt_trainer.jpg"></img>
+                    <img id="showImg" className='showImg' alt="showImg"></img>
                 </Sider>
             </Layout>
-            </div>
-        );
+            </div> )
     }
 
 

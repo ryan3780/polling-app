@@ -9,53 +9,67 @@
     margin-bottom: 40px;    
 }
 
-.test {
-    margin-top: 10px;
-    position: relative;
-   
-}
-
-.shadow:hover {
- cursor: pointer;
- transform:translate(0,-15px);
- transition: all 0.5s ;
- 
-}
-
-.categories {
-    text-align: center;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding-top: 1.875rem;
-    /* padding-right: 3.125rem; */
-    margin-top: 10px;
-    padding-left: 0%
-    
-}
-
-ul {
-    list-style: none;
-}
-
-li {
+.categoryIcon {
     width: 25%;
     /* padding-left: .46875rem; */
     padding-right: .46875rem;
     display: inline-block;
     text-align: center;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    
+}
+
+.shadow:hover {
+    cursor: pointer;
+    transform:translate(0,-15px);
+    transition: all 0.5s ;
+    
+   }
+
+.showImg {
+    position: absolute;
+    max-width: 80%;
+    margin-left: 30px;
+    animation: imgFade 25s infinite ease-in-out alternate;
+  
+   }
+
+   @keyframes imgFade {
+        0% {
+        content: url('https://d1hhkexwnh74v.cloudfront.net/images/category1/pt_trainer.jpg');
+        }
+        10%{
+            opacity: 0;
+        }
+        20%{
+            opacity: 1;
+        }
+        25% {
+        content: url('https://d1hhkexwnh74v.cloudfront.net/images/category1/vocal.jpg');
+        }
+        50% {
+        content: url('https://d1hhkexwnh74v.cloudfront.net/images/category1/interior.jpg');
+        }
+        75% {
+        content: url('https://d1hhkexwnh74v.cloudfront.net/images/category1/pt_trainer_1.jpg');
+        }
+        100% {
+        content: url('https://d1hhkexwnh74v.cloudfront.net/images/category1/teacher.jpg');
+        }
+}
+
+.categories{
+    padding: 0;
 }
 
 @media (max-width: 900px) {
     .categories {
         display: none
     }
-    img {
+    .showImg {
         display: none;
     }
 }
 
-img {
-    max-width: 200px;
-}
+
+
