@@ -151,7 +151,6 @@ function PollList({
 
   const pollViews = [];
   pollListState.polls.forEach((poll, pollIndex) => {
-    // console.log(poll);
     if (poll.question.indexOf(filteredPollList) === -1) {
       return;
     }
@@ -166,18 +165,16 @@ function PollList({
     );
   });
 
-  const handleFilterPollList = value => {
-    setFilteredPollList(value);
-    console.log(filteredPollList);
+  const onFilterPollList = val => {
+    setFilteredPollList(val);
   };
 
   return (
     <div className="polls-container">
-      {filteredPollList}
       {match.params.username ? (
         pollViews
       ) : (
-        <MainPage onSearch={handleFilterPollList} />
+        <MainPage onFilterPollList={onFilterPollList} />
       )}
       {localStorage.getItem("accessToken") ? pollViews : null}
       {!pollListState.isLoading && pollListState.polls.length === 0 ? (
@@ -201,11 +198,12 @@ function PollList({
   );
 }
 
-function MainPage({ handleFilterPollList }) {
-  const test = e => {
-    console.log(e.target);
-    handleFilterPollList(e.target.value);
+function MainPage({ onFilterPollList }) {
+  const handlePollList = e => {
+    // console.log(e.target.value);
+    onFilterPollList(e.target.value);
   };
+
   return (
     <div>
       <div className="poll-content">
@@ -221,8 +219,7 @@ function MainPage({ handleFilterPollList }) {
             <Search
               size="large"
               placeholder="어떤 분야의 전문가를 찾으시나요?"
-              enterButton="Search"
-              onChange={test}
+              onChange={handlePollList}
               style={{
                 width: 550,
                 border: "2px solid #00c7ae",
