@@ -63,17 +63,17 @@ function Signup({ history }) {
     signup(signupRequest)
       .then(response => {
         notification.success({
-          message: "Polling App",
+          message: "찾기 앱",
           description:
-            "Thank you! You're successfully registered. Please Login to continue!"
+            "감사합니다. 가입되셨습니다. 로그인 후 이용해주세요!"
         });
         history.push("/login");
       })
       .catch(error => {
         notification.error({
-          message: "Polling App",
+          message: "찾기 앱",
           description:
-            error.message || "Sorry! Something went wrong. Please try again!"
+            error.message || "죄송합니다. 잠시 후에 이용 부탁드려요!"
         });
       });
   };
@@ -91,16 +91,16 @@ function Signup({ history }) {
     if (name.length < NAME_MIN_LENGTH) {
       return {
         validateStatus: "error",
-        errorMsg: `Name is too short (Minimum ${NAME_MIN_LENGTH} characters needed.)`
+        errorMsg: `이름이 짧아요 (최소 ${NAME_MIN_LENGTH} 글자)`
       };
     } else if (name.length > NAME_MAX_LENGTH) {
       return {
         validationStatus: "error",
-        errorMsg: `Name is too long (Maximum ${NAME_MAX_LENGTH} characters allowed.)`
+        errorMsg: `이름이 너무 길어요 (최대 ${NAME_MAX_LENGTH} 글자)`
       };
     } else {
       return {
-        validateStatus: "success",
+        validateStatus: "성공",
         errorMsg: null
       };
     }
@@ -110,7 +110,7 @@ function Signup({ history }) {
     if (!email) {
       return {
         validateStatus: "error",
-        errorMsg: "Email may not be empty"
+        errorMsg: "이메일을 입력해주세요"
       };
     }
 
@@ -118,14 +118,14 @@ function Signup({ history }) {
     if (!EMAIL_REGEX.test(email)) {
       return {
         validateStatus: "error",
-        errorMsg: "Email not valid"
+        errorMsg: "이메일이 적합하지 않습니다."
       };
     }
 
     if (email.length > EMAIL_MAX_LENGTH) {
       return {
         validateStatus: "error",
-        errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
+        errorMsg: `이메일이 너무 길어요(최대 ${EMAIL_MAX_LENGTH} 글자)`
       };
     }
 
@@ -139,12 +139,12 @@ function Signup({ history }) {
     if (username.length < USERNAME_MIN_LENGTH) {
       return {
         validateStatus: "error",
-        errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+        errorMsg: `이름이 너무 짧아요 (최소 ${USERNAME_MIN_LENGTH} 글자)`
       };
     } else if (username.length > USERNAME_MAX_LENGTH) {
       return {
         validationStatus: "error",
-        errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
+        errorMsg: `이름이 너무 길어요 (최대 ${USERNAME_MAX_LENGTH} 글자)`
       };
     } else {
       return {
@@ -196,7 +196,7 @@ function Signup({ history }) {
             username: {
               value: usernameValue,
               validateStatus: "error",
-              errorMsg: "This username is already taken"
+              errorMsg: "이미 있는 이름입니다"
             }
           });
         }
@@ -257,7 +257,7 @@ function Signup({ history }) {
             email: {
               value: emailValue,
               validateStatus: "error",
-              errorMsg: "This Email is already registered"
+              errorMsg: "이미 있는 이메일입니다"
             }
           });
         }
@@ -279,16 +279,16 @@ function Signup({ history }) {
     if (password.length < PASSWORD_MIN_LENGTH) {
       return {
         validateStatus: "error",
-        errorMsg: `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
+        errorMsg: `비밀번호가 너무 짧아요 (최소 ${PASSWORD_MIN_LENGTH} 글자)`
       };
     } else if (password.length > PASSWORD_MAX_LENGTH) {
       return {
         validationStatus: "error",
-        errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
+        errorMsg: `비밀번호가 너무 길어요 (최대 ${PASSWORD_MAX_LENGTH} 글자)`
       };
     } else {
       return {
-        validateStatus: "success",
+        validateStatus: "성공",
         errorMsg: null
       };
     }
@@ -398,9 +398,9 @@ function Signup({ history }) {
               // ()=> isFormInvalid() 로 하면 에러 로그가 찍힌다
               disabled={isFormInvalid()}
             >
-              Sign up
+              가입하기
             </Button>
-            Already registed? <Link to="/login">Login now!</Link>
+            이미 가입하셨어요? <Link to="/login">지금 로그인하세요!</Link>
           </FormItem>
         </Form>
       </div>

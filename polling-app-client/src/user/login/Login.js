@@ -36,16 +36,16 @@ const LoginForm = ({ form, onLogin }) => {
           .catch(error => {
             if (error.status === 401) {
               notification.error({
-                message: "Polling App",
+                message: "찾기 앱",
                 description:
-                  "Your Username or Password is incorrect. Please try again!"
+                  "이름 혹은 비밀번호가 맞지 않습니다. 다시 입력 부탁드려요!"
               });
             } else {
               notification.error({
-                message: "Polling App",
+                message: "찾기 앱",
                 description:
                   error.message ||
-                  "Sorry! Something went wrong. Please try again!"
+                  "죄송합니다! 잠시 후에 이용 부탁드려요!"
               });
             }
           });
@@ -62,7 +62,7 @@ const LoginForm = ({ form, onLogin }) => {
           rules: [
             {
               required: true,
-              message: "Please input your username or email!"
+              message: "이름 혹은 이메일 입력해주세요!"
             }
           ]
         })(
@@ -76,7 +76,7 @@ const LoginForm = ({ form, onLogin }) => {
       </FormItem>
       <FormItem>
         {getFieldDecorator("password", {
-          rules: [{ required: true, message: "Please input your Password!" }]
+          rules: [{ required: true, message: "비밀번호 입력해주세요!" }]
         })(
           <Input
             prefix={<Icon type="lock" />}
@@ -96,7 +96,7 @@ const LoginForm = ({ form, onLogin }) => {
         >
           Login
         </Button>
-        Or <Link to="/signup">register now!</Link>
+        <Link to="/signup">지금 가입하기!</Link>
       </FormItem>
     </Form>
   );

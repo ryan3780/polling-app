@@ -109,8 +109,8 @@ function PollList({
     if (!isAuthenticated) {
       history.push("/login");
       notification.info({
-        message: "Polling App",
-        description: "Please login to vote."
+        message: "찾기 앱",
+        description: "로그인 후에 참여해주세요."
       });
       return;
     }
@@ -136,14 +136,14 @@ function PollList({
         if (error.status === 401) {
           handleLogout(
             "/login",
-            "error",
-            "You have been logged out. Please login to vote"
+            "에러",
+            "로그 아웃 하셨습니다. 로그인 후에 이용 해주세요."
           );
         } else {
           notification.error({
-            message: "Polling App",
+            message: "찾기 앱",
             description:
-              error.message || "Sorry! Something went wrong. Please try again!"
+              error.message || "죄송합니다! 잠시 후에 이용 부탁드려요!"
           });
         }
       });

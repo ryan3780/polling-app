@@ -58,11 +58,11 @@ function NewPoll({history,handleLogout}) {
             history.push("/");
         }).catch(error => {
             if(error.status === 401) {
-                handleLogout('/login', 'error', 'You have been logged out. Please login create poll.');    
+                handleLogout('/login', 'error', '로그 아웃 하셨습니다. 로그인 후에 사용해주세요.');    
             } else {
                 notification.error({
-                    message: 'Polling App',
-                    description: error.message || 'Sorry! Something went wrong. Please try again!'
+                    message: '찾기 앱',
+                    description: error.message || '죄소합니다. 잠시후에 이용해주세요!'
                 });              
             }
         });
@@ -72,12 +72,12 @@ function NewPoll({history,handleLogout}) {
         if(questionText.length === 0) {
             return {
                 validateStatus: 'error',
-                errorMsg: 'Please enter your question!'
+                errorMsg: '질문을 입력해주세요!'
             }
         } else if (questionText.length > POLL_QUESTION_MAX_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `Question is too long (Maximum ${POLL_QUESTION_MAX_LENGTH} characters allowed)`
+                errorMsg: `질문이 너무 길어요 (최대 ${POLL_QUESTION_MAX_LENGTH} 글자)`
             }    
         } else {
             return {
@@ -102,12 +102,12 @@ function NewPoll({history,handleLogout}) {
         if(choiceText.length === 0) {
             return {
                 validateStatus: 'error',
-                errorMsg: 'Please enter a choice!'
+                errorMsg: '선택을 입력해주세요!'
             }
         } else if (choiceText.length > POLL_CHOICE_MAX_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `Choice is too long (Maximum ${POLL_CHOICE_MAX_LENGTH} characters allowed)`
+                errorMsg: `선택이 너무 길어요 (최대 ${POLL_CHOICE_MAX_LENGTH} 글자)`
             }    
         } else {
             return {
