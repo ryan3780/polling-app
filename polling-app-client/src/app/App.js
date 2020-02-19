@@ -60,7 +60,7 @@ function App({ history }) {
   const handleLogout = (
     redirectTo = "/",
     notificationType = "success",
-    description = "You're successfully logged out."
+    description = "성공적으로 로그 아웃!"
   ) => {
     localStorage.removeItem(ACCESS_TOKEN);
 
@@ -72,15 +72,15 @@ function App({ history }) {
     history.push(redirectTo);
 
     notification[notificationType]({
-      message: "Polling App",
+      message: "찾기 앱",
       description: description
     });
   };
 
   const handleLogin = () => {
     notification.success({
-      message: "Polling App",
-      description: "You're successfully logged in."
+      message: "찾기 앱",
+      description: "성공적으로 로그인!"
     });
     loadCurrentUser();
     history.push("/");

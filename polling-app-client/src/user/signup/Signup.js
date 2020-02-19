@@ -318,11 +318,11 @@ function Signup({ history }) {
   // console.log(inputs)
   return (
     <div className="signup-container">
-      <h1 className="page-title">Sign Up</h1>
+      <h1 className="page-title">가입하기</h1>
       <div className="signup-content">
         <Form onSubmit={handleSubmit} className="signup-form">
           <FormItem
-            label="Full Name"
+            label="이름"
             validateStatus={inputs.name.validateStatus}
             help={inputs.name.errorMsg}
           >
@@ -330,13 +330,13 @@ function Signup({ history }) {
               size="large"
               name="name"
               autoComplete="off"
-              placeholder="Your full name"
+              placeholder="이름"
               value={inputs.name.value}
               onChange={event => handleInputChange(event, validateName)}
             />
           </FormItem>
           <FormItem
-            label="Username"
+            label="닉네임"
             hasFeedback
             validateStatus={inputs.username.validateStatus}
             help={inputs.username.errorMsg}
@@ -345,14 +345,14 @@ function Signup({ history }) {
               size="large"
               name="username"
               autoComplete="off"
-              placeholder="A unique username"
+              placeholder="닉네임"
               value={inputs.username.value}
               onBlur={validateUsernameAvailability}
               onChange={event => handleInputChange(event, validateUsername)}
             />
           </FormItem>
           <FormItem
-            label="Email"
+            label="이메일"
             hasFeedback
             validateStatus={inputs.email.validateStatus}
             help={inputs.email.errorMsg}
@@ -362,14 +362,14 @@ function Signup({ history }) {
               name="email"
               type="email"
               autoComplete="off"
-              placeholder="Your email"
+              placeholder="이메일"
               value={inputs.email.value}
               onBlur={validateEmailAvailability}
               onChange={event => handleInputChange(event, validateEmail)}
             />
           </FormItem>
           <FormItem
-            label="Password"
+            label="비밀번호"
             validateStatus={inputs.password.validateStatus}
             help={inputs.password.errorMsg}
           >
@@ -378,7 +378,7 @@ function Signup({ history }) {
               name="password"
               type="password"
               autoComplete="off"
-              placeholder="A password between 6 to 20 characters"
+              placeholder="비밀번호는 6 ~ 20 자리"
               value={inputs.password.value}
               onChange={event => handleInputChange(event, validatePassword)}
             />

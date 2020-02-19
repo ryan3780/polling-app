@@ -12,7 +12,7 @@ const Login = ({ onLogin }) => {
   const AntWrappedLoginForm = Form.create()(LoginForm);
   return (
     <div className="login-container">
-      <h1 className="page-title">Login</h1>
+      <h1 className="page-title">로그인</h1>
       <div className="login-content">
         <AntWrappedLoginForm onLogin={onLogin} />
       </div>
@@ -23,6 +23,7 @@ const Login = ({ onLogin }) => {
 const LoginForm = ({ form, onLogin }) => {
   
   const handleSubmit = event => {
+    const descriptionWord = `이름 혹은 비밀번호가 맞지 않습니다!\n다시 입력 부탁드려요!`;
     event.preventDefault();
     form.validateFields((err, values) => {
       // console.log(values)
@@ -37,8 +38,10 @@ const LoginForm = ({ form, onLogin }) => {
             if (error.status === 401) {
               notification.error({
                 message: "찾기 앱",
-                description:
-                  "이름 혹은 비밀번호가 맞지 않습니다. 다시 입력 부탁드려요!"
+                description: descriptionWord.split('\n').map(line =>{
+                  return (<span>{line}<br/></span>)
+                })
+                  
               });
             } else {
               notification.error({
@@ -70,7 +73,7 @@ const LoginForm = ({ form, onLogin }) => {
             prefix={<Icon type="user" />}
             size="large"
             name="usernameOrEmail"
-            placeholder="Username or Email"
+            placeholder="닉네임 혹은 이메일"
           />
         )}
       </FormItem>
@@ -83,7 +86,7 @@ const LoginForm = ({ form, onLogin }) => {
             size="large"
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder="비밀번호"
           />
         )}
       </FormItem>
@@ -94,7 +97,7 @@ const LoginForm = ({ form, onLogin }) => {
           size="large"
           className="login-form-button"
         >
-          Login
+          로그인
         </Button>
         <Link to="/signup">지금 가입하기!</Link>
       </FormItem>

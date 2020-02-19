@@ -89,7 +89,7 @@ const Profile = ({ match }) => {
               <div className="full-name">{userProfile.user.name}</div>
               <div className="username">@{userProfile.user.username}</div>
               <div className="user-joined">
-                Joined {formatDate(userProfile.user.joinedAt)}
+                가입한 날짜 {formatDate(userProfile.user.joinedAt)}
               </div>
               <div className="username"> {userProfile.user.id === 11 ? "관리자" : null }</div>
             </div>
@@ -102,13 +102,13 @@ const Profile = ({ match }) => {
               size="large"
               className="profile-tabs"
             >
-              <TabPane tab={`${userProfile.user.pollCount} Polls`} key="1">
+              <TabPane tab={`질문 ${userProfile.user.pollCount}개 `} key="1">
                 <PollList
                   username={match.params.username}
                   type="USER_CREATED_POLLS"
                 />
               </TabPane>
-              <TabPane tab={`${userProfile.user.voteCount} Votes`} key="2">
+              <TabPane tab={`투표 ${userProfile.user.voteCount}개 `} key="2">
                 <PollList
                   username={match.params.username}
                   type="USER_VOTED_POLLS"

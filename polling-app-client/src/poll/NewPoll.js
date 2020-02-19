@@ -170,13 +170,13 @@ function NewPoll({history,handleLogout}) {
 
         return (
             <div className="new-poll-container">
-                <h1 className="page-title">Create Poll</h1>
+                <h1 className="page-title">새로운 투표</h1>
                 <div className="new-poll-content">
                     <Form onSubmit={handleSubmit} className="create-poll-form">
                         <FormItem validateStatus={newPollState.question.validateStatus}
                             help={newPollState.question.errorMsg} className="poll-form-row">
                         <TextArea 
-                            placeholder="Enter your question"
+                            placeholder="질문을 입력하세요."
                             style = {{ fontSize: '16px' }} 
                             autosize={{ minRows: 3, maxRows: 6 }} 
                             name = "question"
@@ -186,12 +186,12 @@ function NewPoll({history,handleLogout}) {
                         {choiceViews}
                         <FormItem className="poll-form-row">
                             <Button type="dashed" onClick={addChoice} disabled={newPollState.choices.length === MAX_CHOICES}>
-                                <Icon type="plus" /> Add a choice
+                                <Icon type="plus" /> 선택 추가
                             </Button>
                         </FormItem>
                         <FormItem className="poll-form-row">
                             <Col xs={24} sm={4}>
-                                Poll length: 
+                                투표 기한: 
                             </Col>
                             <Col xs={24} sm={20}>    
                                 <span style = {{ marginRight: '18px' }}>
@@ -206,7 +206,7 @@ function NewPoll({history,handleLogout}) {
                                                 <Option key={i}>{i}</Option>                                        
                                             )
                                         }
-                                    </Select> &nbsp;Days
+                                    </Select> &nbsp;일
                                 </span>
                                 <span>
                                     <Select 
@@ -220,7 +220,7 @@ function NewPoll({history,handleLogout}) {
                                                 <Option key={i}>{i}</Option>                                        
                                             )
                                         }
-                                    </Select> &nbsp;Hours
+                                    </Select> &nbsp;시간
                                 </span>
                             </Col>
                         </FormItem>
@@ -229,7 +229,7 @@ function NewPoll({history,handleLogout}) {
                                 htmlType="submit" 
                                 size="large" 
                                 disabled={isFormInvalid()}
-                                className="create-poll-form-button">Create Poll</Button>
+                                className="create-poll-form-button">투표 만들기</Button>
                         </FormItem>
                     </Form>
                 </div>    
@@ -243,7 +243,7 @@ function PollChoice({choice, handleChoiceChange, removeChoice,choiceNumber}) {
         <FormItem validateStatus={choice.validateStatus}
         help={choice.errorMsg} className="poll-form-row">
             <Input 
-                placeholder = {'Choice ' + (choiceNumber + 1)}
+                placeholder = {'선택지 ' + (choiceNumber + 1)}
                 size="large"
                 value={choice.text} 
                 className={ choiceNumber > 1 ? "optional-choice": null}
