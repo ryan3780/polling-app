@@ -98,10 +98,10 @@ function AppHeader({ currentUser, location, onLogout }) {
     <Header className="app-header">
       <div className="container">
         <div className="app-title">
-          <Link to="/">Find App</Link>
+          <Link to="/">당신의 선택은?</Link>
         </div>
         <Menu
-          className="app-menu"
+          className="app-menu" 
           mode="horizontal"
           selectedKeys={[location.pathname]}
           style={{ lineHeight: "64px" }}
@@ -122,10 +122,10 @@ function ProfileDropdownMenu({ currentUser, handleMenuClick }) {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="profile" className="dropdown-item">
-        <Link to={`/users/${currentUser.username}`}>Profile</Link>
+        <Link to={`/users/${currentUser.username}`}>프로필</Link>
       </Menu.Item>
       <Menu.Item key="logout" className="dropdown-item">
-        Logout
+        로그아웃
       </Menu.Item>
     </Menu>
   );
