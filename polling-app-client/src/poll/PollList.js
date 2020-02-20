@@ -9,9 +9,10 @@ import { castVote } from "../util/APIUtils";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { Icon, notification, Layout, Button, Input } from "antd";
 import { POLL_LIST_SIZE } from "../constants";
-import { withRouter } from "react-router-dom";
+import { withRouter , Link} from "react-router-dom";
 import "./PollList.css";
 import { useEffect } from "react";
+
 
 const { Sider, Content } = Layout;
 const { Search } = Input;
@@ -179,7 +180,7 @@ function PollList({
       {localStorage.getItem("accessToken") ? pollViews : null}
       {!pollListState.isLoading && pollListState.polls.length === 0 ? (
         <div className="no-polls-found">
-          <span>No Polls Found.</span>
+          <span>설문지를 만들어주세요!</span>
         </div>
       ) : null}
       {!pollListState.isLoading && !pollListState.last ? (
@@ -189,7 +190,7 @@ function PollList({
             onClick={handleLoadMore}
             disabled={pollListState.isLoading}
           >
-            <Icon type="plus" /> Load more
+            <Icon type="plus" /> 더 보기!
           </Button>
         </div>
       ) : null}
@@ -210,15 +211,15 @@ function MainPage({ onFilterPollList }) {
         <div className="poll-header">
           <div>
             <h2 style={{ fontWeight: 700 }}>
-              딱! 맞는 고수를
+              원하는 투표를
               <br />
-              소개해드립니다
+              검색하세요
             </h2>
           </div>
           <div className="poll-question">
             <Search
               size="large"
-              placeholder="어떤 분야의 전문가를 찾으시나요?"
+              placeholder="검색"
               onChange={handlePollList}
               style={{
                 width: 550,
@@ -234,12 +235,14 @@ function MainPage({ onFilterPollList }) {
         <Content>
           <ul className="categories">
             <li className="categoryIcon">
+            <Link to='/poll/new'>
               <Icon
                 className="shadow"
                 type="edit"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
+              </Link>
               <p className="test">레슨</p>
             </li>
             <li className="categoryIcon">
