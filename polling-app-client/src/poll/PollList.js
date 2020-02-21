@@ -9,10 +9,9 @@ import { castVote } from "../util/APIUtils";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { Icon, notification, Layout, Button, Input } from "antd";
 import { POLL_LIST_SIZE } from "../constants";
-import { withRouter , Link} from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import "./PollList.css";
 import { useEffect } from "react";
-
 
 const { Sider, Content } = Layout;
 const { Search } = Input;
@@ -169,14 +168,12 @@ function PollList({
   const onFilterPollList = val => {
     setFilteredPollList(val);
   };
-
+  console.log(match);
   return (
     <div className="polls-container">
-      {match.params.username ? (
-        pollViews
-      ) : (
+      {match.url !== `/users/${username}` ? (
         <MainPage onFilterPollList={onFilterPollList} />
-      )}
+      ) : null}
       {localStorage.getItem("accessToken") ? pollViews : null}
       {!pollListState.isLoading && pollListState.polls.length === 0 ? (
         <div className="no-polls-found">
@@ -211,7 +208,7 @@ function MainPage({ onFilterPollList }) {
         <div className="poll-header">
           <div>
             <h2 style={{ fontWeight: 700 }}>
-              원하는 투표를
+              원하는 설문조사를
               <br />
               검색하세요
             </h2>
@@ -235,51 +232,51 @@ function MainPage({ onFilterPollList }) {
         <Content>
           <ul className="categories">
             <li className="categoryIcon">
-            <Link to='/poll/new'>
-              <Icon
-                className="shadow"
-                type="edit"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
+              <Link to="/poll/new">
+                <Icon
+                  className="shadow"
+                  type="home"
+                  theme="twoTone"
+                  style={{ fontSize: "50px", color: "#08c" }}
+                />
               </Link>
-              <p className="test">레슨</p>
+              <p className="test">지역</p>
             </li>
             <li className="categoryIcon">
               <Icon
                 className="shadow"
-                type="bank"
+                type="dollar"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
-              <p className="test">홈/리빙</p>
+              <p className="test">연봉</p>
             </li>
             <li className="categoryIcon">
               <Icon
                 className="shadow"
-                type="heart"
+                type="code"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
-              <p className="test">이벤트</p>
+              <p className="test">언어</p>
             </li>
             <li className="categoryIcon">
               <Icon
                 className="shadow"
-                type="pie-chart"
+                type="build"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
-              <p className="test">비즈니스</p>
+              <p className="test">직군</p>
             </li>
             <li className="categoryIcon">
               <Icon
                 className="shadow"
-                type="html5"
+                type="tablet"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
-              <p className="test">디자인/개발</p>
+              <p className="test">업종</p>
             </li>
             <li className="categoryIcon">
               <Icon
@@ -288,21 +285,21 @@ function MainPage({ onFilterPollList }) {
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
-              <p className="test">건강/미용</p>
+              <p className="test">분위기</p>
             </li>
             <li className="categoryIcon">
               <Icon
                 className="shadow"
-                type="shop"
+                type="trophy"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
-              <p className="test">알바</p>
+              <p className="test">복지</p>
             </li>
             <li className="categoryIcon">
               <Icon
                 className="shadow"
-                type="bulb"
+                type="star"
                 theme="twoTone"
                 style={{ fontSize: "50px", color: "#08c" }}
               />
