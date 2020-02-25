@@ -1,0 +1,41 @@
+.showImg {
+    position: relative;
+    max-width: 30%;
+    margin-left: 30px;
+    animation: imgFade 25s infinite ease-in-out alternate;
+  }
+  
+  @keyframes imgFade {
+    0% {
+      opacity: 1;
+      content: url("https://d1hhkexwnh74v.cloudfront.net/images/category1/pt_trainer.jpg");
+    }
+    12.5% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+      content: url("https://d1hhkexwnh74v.cloudfront.net/images/category1/vocal.jpg");
+    }
+    37.5% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+      content: url("https://d1hhkexwnh74v.cloudfront.net/images/category1/interior.jpg");
+    }
+    62.5% {
+      opacity: 0;
+    }
+    75% {
+      opacity: 1;
+      content: url("https://d1hhkexwnh74v.cloudfront.net/images/category1/pt_trainer_1.jpg");
+    }
+    87.5% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      content: url("https://d1hhkexwnh74v.cloudfront.net/images/category1/teacher.jpg");
+    }
+  }
