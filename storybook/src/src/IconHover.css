@@ -1,0 +1,23 @@
+.shadow {
+    width: 20%;
+    height: 20%;
+  }
+  
+  .categoryIcon {
+    /* padding-left: .46875rem; */
+    /* padding-right: 0.46875rem; */
+    display: inline-block;
+    text-align: center;
+    margin-top: 30px;
+    
+  }
+  
+  .shadow:hover {
+    cursor: pointer;
+    transform: translate(0, -15px);
+    transition: all 0.5s;
+  }
+
+  li {
+    width: 25%
+  }
