@@ -9,7 +9,7 @@ import { castVote } from "../util/APIUtils";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { Icon, notification, Layout, Button, Input } from "antd";
 import { POLL_LIST_SIZE } from "../constants";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./PollList.css";
 import { useEffect } from "react";
 
@@ -168,7 +168,7 @@ function PollList({
   const onFilterPollList = val => {
     setFilteredPollList(val);
   };
-  console.log(match);
+  // console.log(match);
   return (
     <div className="polls-container">
       {match.url !== `/users/${username}` ? (
@@ -202,6 +202,34 @@ function MainPage({ onFilterPollList }) {
     onFilterPollList(e.target.value);
   };
 
+// 중복이 되는 HTML 요소들을 반복문으로 출력하기 위한 key, value 객체를 배열로 만듬
+  const iconName = [
+    {'home' : '지역'},
+    {'dollar' : '연봉'},
+    {'code' : '언어'},
+    {'build' : '직군'},
+    {'tablet' : '업종'},
+    {'smile' : '분위기'},
+    {'trophy' : '복지'},
+    {'star' : '기타'},
+]
+
+// 아이콘 UI를 반복문으로 화면에 보여주는 기능
+const iconViews = [];
+  iconName.forEach((ele) => {
+    iconViews.push(
+      <li className="categoryIcon">
+                <Icon
+                  className="shadow"
+                  type={Object.keys(ele).toString()}
+                  theme="twoTone"
+                  style={{ fontSize: "50px", color: "#08c" }}
+                />
+              <p className="test">{Object.values(ele)}</p>
+            </li>
+        )   
+  });
+
   return (
     <div>
       <div className="poll-content">
@@ -227,84 +255,10 @@ function MainPage({ onFilterPollList }) {
           </div>
         </div>
       </div>
-
       <Layout style={{ marginTop: "10px", marginBottom: "10px" }}>
         <Content>
           <ul className="categories">
-            <li className="categoryIcon">
-              <Link to="/poll/new">
-                <Icon
-                  className="shadow"
-                  type="home"
-                  theme="twoTone"
-                  style={{ fontSize: "50px", color: "#08c" }}
-                />
-              </Link>
-              <p className="test">지역</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="dollar"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">연봉</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="code"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">언어</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="build"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">직군</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="tablet"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">업종</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="smile"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">분위기</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="trophy"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">복지</p>
-            </li>
-            <li className="categoryIcon">
-              <Icon
-                className="shadow"
-                type="star"
-                theme="twoTone"
-                style={{ fontSize: "50px", color: "#08c" }}
-              />
-              <p className="test">기타</p>
-            </li>
+          {iconViews}
           </ul>
         </Content>
         <Sider>
