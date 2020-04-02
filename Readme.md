@@ -1,11 +1,9 @@
 ## 바뀐 페이지로 내용 다시 적기  
 
 
-### Original Code & developer site : https://github.com/callicoder/spring-security-react-ant-design-polls-app
+### 기초 코드 : https://github.com/callicoder/spring-security-react-ant-design-polls-app
 
-## Building a Full Stack Polls app similar to twitter polls with Spring Boot, Spring Security, JWT, React and Ant Design
-
-![App Screenshot](screenshot.png)
+## 사진  
 
 ### Tutorials
 
