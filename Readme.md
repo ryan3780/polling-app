@@ -1,5 +1,6 @@
-## 바뀐 페이지로 내용 다시 적기  
+### 설문조사 투표 앱  
 
+callicoder의 코드를 ES6와 ReactHook으로 변경하고, 디자인을 조금 변경했다.
 
 ### 기초 코드 : https://github.com/callicoder/spring-security-react-ant-design-polls-app
 
