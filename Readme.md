@@ -1,6 +1,6 @@
 ## 설문조사 투표 앱  
 
-callicoder의 코드를 ES6를 기반으로 컴포넌트형과 ReactHook으로 변경하고, 숨고(Soomgo) 디자인을 참고하여 변경했다.  
+callicoder의 코드를 ES6를 기반으로 컴포넌트형과 ReactHook으로 변경하고, 숨고(Soomgo) 디자인을 참고하여 변경했다.sdkjfklajsdfkljaskdljfsdafkljsadkljfdjsdafkl
 
 ### 느낀점  
 
