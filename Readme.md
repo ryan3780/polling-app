@@ -15,6 +15,8 @@ callicoder의 코드를 ES6를 기반으로 컴포넌트형과 ReactHook으로 �
 <img width = "80%" height="60%" alt="page" src="https://user-images.githubusercontent.com/45477679/82125051-2d7e3080-97de-11ea-8763-77c32465478d.gif">
 <img width = "80%" height="60%" alt="page" src="https://user-images.githubusercontent.com/45477679/82125183-42a78f00-97df-11ea-8d49-f4c369c4ac43.gif">
 <img width = "50%" height="60%" alt="page" src="https://user-images.githubusercontent.com/45477679/82125405-b9915780-97e0-11ea-8806-455385d5c9ac.png">
+<img width = "50%" height="60%" alt="page" src="https://user-images.githubusercontent.com/45477679/84862600-68f66e00-b0ae-11ea-838e-4eae9b8bc049.jpg">
+
 
 ## Steps to Setup the Spring Boot Back end app (polling-app-server)
 Clone the application
